@@ -121,6 +121,11 @@ public:
     (*this) += speed * (target - (*this));
   }
 
+  T length() 
+  {
+    return sqrtf(components[0] * components[0] + components[1] * components[1] + components[2] * components[2]);
+  }
+
   Vec3<T> normalize()
   {
     Vec3<T> normal;
@@ -154,9 +159,13 @@ public:
       result += components[i] * other[i];
     return result;
   }
-  T cross(Vec3<T> other, Vec3<T> another)
+  Vec3<T> cross(Vec3<T> another)
   {
-    return ((other[0] - components[0]) * (another[1] - components[1]) - (other[1] - components[1]) * (another[0] - components[0]));
+    Vec3<T> crossResult;
+    crossResult[0] = components[1] * another[2] - another[1] * components[2];
+    crossResult[1] = components[2] * another[0] - another[2] * components[0];
+    crossResult[2] = components[0] * another[1] - another[0] * components[1];
+    return crossResult;
   }
   friend Vec3<T> operator/ (T other, Vec3<T> otherVec)
   {
